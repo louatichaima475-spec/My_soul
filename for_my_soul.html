@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>For Chaima ♡</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;overflow-x:hidden;background:radial-gradient(ellipse at 50% 45%,#45112f,#210b24 48%,#090612);color:white;font-family:Poppins,sans-serif;text-align:center;display:flex;align-items:center;justify-content:center}
+body:before{content:"";position:fixed;inset:-50%;pointer-events:none;background:radial-gradient(circle at 20% 30%,#ff3e9e22,transparent 25%),radial-gradient(circle at 80% 70%,#b34dff22,transparent 30%);animation:bg 9s ease-in-out infinite alternate}
+@keyframes bg{to{transform:scale(1.15) rotate(8deg)}}
+.page{position:relative;z-index:2;width:100%;min-height:100vh;padding:35px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.tag{font-size:11px;letter-spacing:5px;color:#ffb5d9;text-transform:uppercase}
+h1{font:400 clamp(48px,10vw,82px) 'Great Vibes',cursive;color:#ffe0ef;text-shadow:0 0 15px #ff4c9d,0 0 35px #ff1684}
+.subtitle{font-size:12px;letter-spacing:2px;color:#e9bad2}
+.heart-wrap{width:min(92vw,510px);height:min(92vw,510px);margin:8px auto 0;filter:drop-shadow(0 0 12px #ff238b55);animation:beat 3s ease-in-out infinite}
+canvas{width:100%;height:100%;display:block}
+@keyframes beat{50%{transform:scale(1.025)}}
+.bottom-text{font-size:13px;color:#ffd1e6;text-shadow:0 0 12px #ff55a8}
+button{margin-top:25px;border:1px solid #ff9acb;border-radius:40px;padding:13px 28px;color:white;font:13px Poppins;background:linear-gradient(135deg,#ff398d,#9b3cba);box-shadow:0 0 20px #ff238b66;cursor:pointer}
+.message{display:none;max-width:330px;margin-top:20px;padding:18px 22px;border:1px solid #ff8fc4aa;border-radius:18px;background:#3b1235dd;color:#ffe0ef;font:27px/1.5 'Great Vibes',cursive;box-shadow:0 0 25px #ff238b44}
+.message.show{display:block;animation:pop .6s ease}
+@keyframes pop{from{opacity:0;transform:translateY(15px) scale(.9)}to{opacity:1;transform:none}}
+.star{position:fixed;color:#fff1fa;z-index:1;pointer-events:none;text-shadow:0 0 10px #ff8ec7;animation:twinkle var(--d) ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.15;transform:scale(.6)}to{opacity:1;transform:scale(1.3)}}
+.floating-heart{position:fixed;bottom:-40px;color:#ff70ae;z-index:1;pointer-events:none;text-shadow:0 0 12px #ff3c91;animation:floatUp linear forwards}
+@keyframes floatUp{0%{transform:translateY(0);opacity:0}10%{opacity:.8}100%{transform:translateY(-110vh) rotate(35deg);opacity:0}}
+.footer{margin-top:24px;color:#bd8cae;font-size:10px;letter-spacing:3px}
+@media(max-width:480px){.heart-wrap{width:96vw;height:96vw}.bottom-text{font-size:11px}}
+</style></head>
+<body><main class="page">
+<div class="tag">A little something for</div><h1>My Soul</h1>
+<div class="subtitle">♡ YOU ARE MY FAVORITE PERSON ♡</div>
+<div class="heart-wrap"><canvas id="heartCanvas"></canvas></div>
+<div class="bottom-text">Every little piece of my heart says I LOVE YOU</div>
+<button id="surpriseBtn">Open my heart ♡</button>
+<div class="message" id="message">My soul, you make the world more beautiful.<br>I love you endlessly. ♡</div>
+<div class="footer">MADE WITH ALL MY LOVE ✧</div></main>
+<script>
+const canvas=document.getElementById('heartCanvas'),ctx=canvas.getContext('2d');let W,H,S;
+function point(t,k){const x=16*Math.sin(t)**3,y=-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t));return{x:W/2+x*S*k,y:H/2+y*S*k}}
+function angleAt(t,k){const d=.001,a=point(t-d,k),b=point(t+d,k);let a1=Math.atan2(b.y-a.y,b.x-a.x);if(a1>Math.PI/2)a1-=Math.PI;if(a1< -Math.PI/2)a1+=Math.PI;return a1}
+function phrase(t,k,size,color){const p=point(t,k);ctx.save();ctx.translate(p.x,p.y);ctx.rotate(angleAt(t,k));ctx.font=`600 ${size}px Arial`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.shadowColor=color;ctx.shadowBlur=8;ctx.fillStyle=color;ctx.fillText('I love you',0,0);ctx.restore()}
+function draw(){const r=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);W=r.width;H=r.height;canvas.width=W*dpr;canvas.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);S=Math.min(W/37,H/37);ctx.clearRect(0,0,W,H);
+const layers=[{k:1,size:10.5,color:'#ffabd4',count:32},{k:.88,size:9.5,color:'#ff70b7',count:29},{k:.76,size:8.8,color:'#ffc0df',count:26},{k:.64,size:8,color:'#ff5ca9',count:23},{k:.52,size:7.2,color:'#ff9bc9',count:20}];
+layers.forEach(L=>{for(let i=0;i<=L.count;i++){const t=.0001+(Math.PI-.0002)*i/L.count,z=L.size+(i%4===0?.5:0);phrase(t,L.k,z,L.color);if(i!==0&&i!==L.count)phrase(2*Math.PI-t,L.k,z,L.color)}});
+}
+new ResizeObserver(draw).observe(canvas);draw();
+for(let i=0;i<65;i++){const e=document.createElement('div');e.className='star';e.textContent=Math.random()>.5?'✦':'·';e.style.left=Math.random()*100+'vw';e.style.top=Math.random()*100+'vh';e.style.fontSize=5+Math.random()*13+'px';e.style.setProperty('--d',1.2+Math.random()*3+'s');e.style.animationDelay=Math.random()*3+'s';document.body.appendChild(e)}
+function floatHeart(){const e=document.createElement('div');e.className='floating-heart';e.textContent=['♡','♥','ღ','✧'][Math.floor(Math.random()*4)];e.style.left=Math.random()*100+'vw';e.style.fontSize=12+Math.random()*20+'px';e.style.animationDuration=7+Math.random()*7+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),15000)}
+setInterval(floatHeart,650);
+document.getElementById('surpriseBtn').onclick=()=>{const m=document.getElementById('message');m.classList.toggle('show');document.getElementById('surpriseBtn').textContent=m.classList.contains('show')?'Close my heart ♡':'Open my heart ♡'};
+</script></body></html>
